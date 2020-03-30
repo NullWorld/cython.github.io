@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <title>Document</title>
+    <style type="css/text">
+        .button1 {
+            color: red;
+            background-color:red;
+            font: 2100px;
+        }
+    </style>
+    <script>
+        // var myWindow = window.open("", "", "width=200, height=100");
+        // myWindow.document.write("<p>这是一个新窗口'</p>");
+        // setTimeout(function () { myWindow.close() }, 3000);
+        function countdownAction() {
+            console.log('11111');
+            var time = 60;
+            // var code = $("#code");//#后面为创建标签的id
+            var code = document.getElementById('code')
+            // code.attr("disabled", "disabled");//通过css，在倒计时执行期间，禁止标签的点击事件
+            // code.css("background-color", "#cccccc");//改变标签的背景颜色
+            var set = setInterval(function () {//执行倒计时方法，一秒钟执行一次
+                --time;
+                code.innerHTML = time+'s';
+                // code.val(time);//改变标签的显示，显示为数字倒计时
+            }, 1000);//此方法后面跟的是毫秒级单位
+            setTimeout(function () {//60s之后执行的方法
+                var code = document.getElementById('code')
+                code.innerHTML = "";
+                // code.css("background-color", "#1BB771");
+                // code.attr("disabled", false).val("发送");
+                // clearInterval(set);//同时停止上面重复方法的执行
+            }, 60000);
+        };
+    </script>
+</head>
+
+
+<body>
+    <input type="text" id="txt" />
+    <span id="sp"></span>
+    <span>60s</span><button onclick="countdownAction()" class="button1"  id="code">发送验证码</button>
+    <div id="example">
+        <div @click="addNewTodo"><span>add value </span><input v-model="message"><button @click="">add</button></div>
+        <div v-for="(item, index) in intems" :key="index">
+            <span>{{item.id}}</span><button
+                style="color: red; height: 30px;background-color:#9f9f9f;padding-left: 30px;"
+                @click="removeData(index)">删除</button>
+        </div>
+    </div>
+</body>
+<script>
+
+    var txt = document.getElementById('txt');
+    sp = document.getElementById('sp');
+    obj = {};
+    Object.defineProperty(obj, 'msg', {
+        set: function (newVal) {
+            txt.value = newVal;
+            sp.innerText = newVal;
+        }
+    });
+    txt.addEventListener('keyup', function (event) {
+        obj.msg = event.target.value;
+    });
+
+    var vm = new Vue({
+        data: {
+            stu: {
+                name: 'jack',
+                age: 19
+            }
+        }
+    });
+
+    Vue.set(vm.stu, 'gender', 'male');
+    vm.stu = Object.assign({}, vm.stu, { gender: 'female', height: 180 });
+
+
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            x: 1,
+            y: 2,
+            message: 'Hello',
+            num: 6,
+            intems: [
+                { 'key': "123", 'id': 1 },
+                { 'key': "234", 'id': 2 },
+                { 'key': "34", 'id': 3 },
+                { 'key': "345", 'id': 4 },
+                { 'key': "35", 'id': 5 }
+            ]
+        },
+        beforeCreate() {
+            console.log("beforeCreate");
+        },
+        created() {
+            console.log("create");
+        },
+        beforeCreate() {
+
+        },
+        mounted() {
+
+        },
+        beforeUpdate() {
+
+        },
+        updated() {
+
+        },
+        beforeDestroy() {
+
+        },
+        destroyed() {
+
+        },
+        computed: {
+            // 计算属性的 getter
+            reversedMessage() {
+                // `this` 指向 vm 实例
+                return this.message.split('').reverse().join('')
+            },
+            totle() {
+                return this.x + this.y;
+            }
+        },
+        methods: {
+            addNewTodo() {
+                this.intems.push({
+                    'key': this.message,
+                    'id': this.num++
+                }),
+                    this.message = ""
+            },
+            removeData(index, obj) {
+                this.intems.splice(index, 1)
+            },
+            timer() {
+                window.setTimeout(function () {
+
+                }, 2000);
+            }
+        }
+    })
+</script>
+
+</html>
